@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>KaTeX Local Example</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="../assets/libs/katex/0.16.45/katex.min.css">
+
+  <!-- KaTeX JS -->
+  <script defer src="../assets/libs/katex/0.16.45/katex.min.js"></script>
+
+  <!-- Auto-render extension -->
+  <script defer src="../assets/libs/katex/0.16.45/contrib/auto-render.min.js"></script>
+  
+  
+  <!-- Mermaid JS -->
+  <script src="../assets/libs/mermaid/11.12.0/mermaid.min.js"></script>
+  
+  <style>
+    .mermaid {
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      padding-left: 2em;
+    }
+  </style>
+  
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#ffcc00',
+        edgeLabelBackground: '#ffffff',
+        fontSize: '16px'
+      }
+    });
+  </script>
+  
+  
+  <!-- ChartJS -->
+  <script src="../assets/libs/chartjs/4.5.1/chart.umd.min.js"></script>
+  
+  <style>
+    .chart-container {
+      width: 600px;
+      height: 300px;
+      padding-left: 2em;
+    }
+  </style>
+
+
+  <!-- Markdown parser -->
+  <script src="../assets/libs/marked/15.0.12/marked.min.js"></script>
+  
+  <link rel="stylesheet" href="../assets/css/markdown.css">
+
+</head>
+
+<body>
+
+
+<div class="markdown">
+# Physics Web Note
+
+Sparisoma Viridi | 14-Apr-2026
+</div>
+
+
+<div class="markdown">
+## Outline
+- Markdown example
+- Diagram example
+- Math example
+- Chart example
+</div>
+
+
+<div class="markdown">
+## Markdown example
+</div>
+
+<div class="markdown">
+Tabel 1. Values of $x$ and $\sin x$.
+x (°) | sin x
+:-: | :-: 
+0   | 0
+..  | ..
+90  | 1
+..  | ..
+180 | 0
+..  | ..
+270 | -1
+..  | ..
+360 | 0
+</div>
+
+
+<div class="markdown">
+## Diagram example
+</div>
+
+<div class="mermaid">
+graph LR
+  A[User] --> B[Login]
+  B --> C{Success?}
+  C -->|Yes| D[Dashboard]
+  C -->|No| E[Retry]
+</div>
+
+
+<div class="markdown">
+## Math example
+</div>
+
+<div class="markdown">
+Amplitude $A = 1$ and $x$ in $\degree$, where the equation is as follows
+
+$$\tag{1}
+y(x) = \int_0^x \cos z dz.
+$$
+
+Plot of Eqn (1) is given in Figure 1.
+</div>
+
+
+<div class="markdown">
+## Chart example
+</div>
+
+<div class="chart-container">
+  <canvas id="sineChart"></canvas>
+</div>
+
+<div class="markdown">
+Figure 1. Plot of sine function.
+</div>
+
+<script src="./chart.min.js"></script>
+<script>
+  const labels = [];
+  const data = [];
+
+  // Generate sine wave data
+  for (let x = 0; x <= 360; x += 10) {
+    labels.push(x); // degrees
+    data.push(Math.sin(x * Math.PI / 180)); // convert to radians
+  }
+
+  const ctx = document.getElementById('sineChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'sin(x)',
+        data: data,
+        borderWidth: 2,
+        tension: 0.3, // smooth curve
+        pointRadius: 2.0 // hide dots with 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'x (°)'
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'sin(x)'
+          },
+          min: -1,
+          max: 1
+        }
+      }
+    }
+  });
+</script>
+
+<div class="markdown">
+## Other examples
+
+They should be put here.
+</div>
+
+
+
+<script>
+  document.querySelectorAll('.markdown').forEach(el => {
+    const raw = el.textContent;     // get markdown text
+    const html = marked.parse(raw); // convert to HTML
+    el.innerHTML = html;            // replace content
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false}
+    ]
+  });
+});
+</script>
+  
+</body>
+</html>
